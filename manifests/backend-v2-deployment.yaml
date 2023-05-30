@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: backend
+  name: backend-v2
   labels:
     app: backend
 spec:
@@ -9,13 +9,15 @@ spec:
   selector:
     matchLabels:
       app: backend
+      version: v2
   template:
     metadata:
       labels:
         app: backend
+        version: v2
       annotations:
         consul.hashicorp.com/connect-inject: "true"
-        consul.hashicorp.com/service-meta-version: "v1"
+        consul.hashicorp.com/service-meta-version: "v2"
     spec:
       containers:
         - name: backend
@@ -25,6 +27,8 @@ spec:
               value: "0.0.0.0:7000"
             - name: TRACING_URL
               value: "http://jaeger-collector.default:9411"
+            - name: VERSION
+              value: "v2"
           ports:
             - containerPort: 7000
           readinessProbe:

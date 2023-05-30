@@ -44,3 +44,18 @@ ui:
     # Use port 8500 for the UI.
     port:
       http: 8500
+  dashboardURLTemplates:
+    service: "http://localhost:3000/d/yIF9ot84z/services?orgId=1&var-Service={{Service.Name}}"
+
+
+ingressGateways:
+  enabled: true
+  defaults:
+    affinity: null
+  gateways:
+    - name: ingress-gateway
+      service:
+        type: LoadBalancer
+        ports:
+          - port: 8080
+      replicas: 1
